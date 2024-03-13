@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 
 const itemSchema = new Schema({
   title: {
@@ -8,13 +8,17 @@ const itemSchema = new Schema({
   tickerSymbol: {
     type: String,
     required: [true, 'Ticker Symbol is required'],
-    unique: true,
     uppercase: true,
   },
   typeOfAsset: {
     type: String,
     required: [true, 'Type of Asset required'],
     enum: ['stock', 'etf', 'crypto', 'commodity', 'forex'],
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   },
 });
 
