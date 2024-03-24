@@ -74,7 +74,7 @@ router.post('/login', async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ messsage: 'Provided email is not registered' });
+        .json({ message: 'Provided email is not registered' });
     }
 
     const isPasswordCorrect = bcrypt.compareSync(password, user.password);
@@ -174,6 +174,18 @@ router.put('/changePassword', async (req, res, next) => {
     if (compareConfirmed !== 0) {
       return res.status(404).json({
         message: 'Please correctly confirm your password',
+      });
+    }
+
+    if (newPassword === '' || password === '' || newPasswordConfirm === '') {
+      return res.status(404).json({ message: 'All fields need to be filled' });
+    }
+
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      return res.status(400).json({
+        message:
+          'Password should have at least 6 characters one lower and upper case letter, a number and a special character',
       });
     }
 
