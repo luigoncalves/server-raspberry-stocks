@@ -91,7 +91,7 @@ router.post('/login', async (req, res, next) => {
       });
       res.status(200).json({ authToken });
     } else {
-      return res.status(401).json({ message: 'Unable to authenticate user' });
+      return res.status(401).json({ message: 'Email or password not correct' });
     }
   } catch (error) {
     console.log('An error occurred login in the user', error);
